@@ -165,13 +165,13 @@ function cfpf_post_has_gallery($post_id = null) {
 		$post_id = get_the_ID();
 	}
 	$images = new WP_Query(array(
-		'post_parent'		=> $post_id,
-		'post_type'			=> 'attachment',
-		'post_status'		=> 'inherit',
-		'posts_per_page'	=> 1, // -1 to show all
-		'post_mime_type'	=> 'image%',
-		'orderby'			=> 'menu_order',
-		'order'				=> 'ASC'
+		'post_parent' => $post_id,
+		'post_type' => 'attachment',
+		'post_status' => 'inherit',
+		'posts_per_page' => 1, // -1 to show all
+		'post_mime_type' => 'image%',
+		'orderby' => 'menu_order',
+		'order' => 'ASC'
 	));
 	return (bool) $images->post_count;
 }
