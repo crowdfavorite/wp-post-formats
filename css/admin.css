@@ -3,6 +3,9 @@
 #titlewrap {
 	display: none;
 }
+.post-new-php #titlediv {
+	margin-bottom: 0;
+}
 #post-body-content #postimagediv .inside p {
 	text-align: center;
 }
