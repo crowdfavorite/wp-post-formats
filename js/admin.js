@@ -43,7 +43,7 @@ jQuery(function($) {
 			},
 
 			link: function() {
-				$('#cfpf-format-quote-field, #cfpf-format-video-fields, #cfpf-format-gallery-previews').hide();
+				$('#cfpf-format-quote-field, #cfpf-format-video-fields, #cfpf-format-gallery-preview').hide();
 				$('#titlewrap, #cfpf-format-link-url').show();
 				$('#postimagediv-placeholder').replaceWith($('#postimagediv'));
 			},
