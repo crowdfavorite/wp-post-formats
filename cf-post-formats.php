@@ -38,20 +38,22 @@ function cfpf_base_url() {
 
 function cfpf_admin_init() {
 	$post_formats = get_theme_support('post-formats');
-	if (in_array('link', $post_formats)) {
-		add_action('save_post', 'cfpf_format_link_save_post');
-	}
-	if (in_array('status', $post_formats)) {
-		add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
-	}
-	if (in_array('quote', $post_formats)) {
-		add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
-	}
-	if (in_array('video', $post_formats)) {
-		add_action('save_post', 'cfpf_format_video_save_post');
-	}
-	if (in_array('audio', $post_formats)) {
-		add_action('save_post', 'cfpf_format_audio_save_post');
+	if (!empty($post_formats[0]) && is_array($post_formats[0])) {
+		if (in_array('link', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_link_save_post');
+		}
+		if (in_array('status', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
+		}
+		if (in_array('quote', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+		}
+		if (in_array('video', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_video_save_post');
+		}
+		if (in_array('audio', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_audio_save_post');
+		}
 	}
 }
 add_action('admin_init', 'cfpf_admin_init');
