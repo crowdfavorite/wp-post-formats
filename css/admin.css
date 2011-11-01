@@ -1,4 +1,3 @@
-
 #formatdiv, /* hide default radio button UI */
 #titlewrap {
 	display: none;
@@ -80,6 +79,13 @@
 .cp-elm-block .cp-elm-image-gallery dt {
 	margin: 0 5px 5px 0;
 	padding: 0;
+}
+
+.cp-elm-block .cp-elm-container .gallery dt img {
+	width: 90%;
+	height: auto;
+	margin: 5%;
+	border: none;
 }
 
 /* Video Field */
