@@ -3,7 +3,7 @@
 	<div class="cp-elm-container">
 
 <?php
-	echo do_shortcode('[gallery columns="9999"]');
+	echo do_shortcode('[gallery columns="6"]');
 ?>
 <p class="none"><a href="#" class="button"><?php _e('Upload Images', 'cf-post-format'); ?></a></p>
 	</div>

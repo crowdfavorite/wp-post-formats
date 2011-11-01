@@ -33,7 +33,7 @@ Author URI: http://crowdfavorite.com
 define('CFPF_VERSION', '0.3');
 
 function cfpf_base_url() {
-	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
+	return trailingslashit(apply_filters('cfpf_base_url', get_bloginfo('url').str_replace($_SERVER["DOCUMENT_ROOT"], '', dirname(__FILE__))));
 }
 
 function cfpf_admin_init() {
