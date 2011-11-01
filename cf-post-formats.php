@@ -30,11 +30,31 @@ Author URI: http://crowdfavorite.com
  * **********************************************************************
  */
 
-define('CFPF_VERSION', '0.2');
+define('CFPF_VERSION', '0.3');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
 }
+
+function cfpf_admin_init() {
+	$post_formats = get_theme_support('post-formats');
+	if (in_array('link', $post_formats)) {
+		add_action('save_post', 'cfpf_format_link_save_post');
+	}
+	if (in_array('status', $post_formats)) {
+		add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
+	}
+	if (in_array('quote', $post_formats)) {
+		add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+	}
+	if (in_array('video', $post_formats)) {
+		add_action('save_post', 'cfpf_format_video_save_post');
+	}
+	if (in_array('audio', $post_formats)) {
+		add_action('save_post', 'cfpf_format_audio_save_post');
+	}
+}
+add_action('admin_init', 'cfpf_admin_init');
 
 // we aren't really adding meta boxes here,
 // but this gives us the info we need to get our stuff in.
@@ -53,7 +73,6 @@ function cfpf_add_meta_boxes($post_type) {
 			)
 		);
 		
-		// actions
 		add_action('edit_form_advanced', 'cfpf_post_admin_setup');
 	}
 }
@@ -78,15 +97,23 @@ function cfpf_post_admin_setup() {
 		if (!empty($current_post_format) && !in_array($current_post_format, $post_formats[0])) {
 			array_push($post_formats[0], get_post_format_string($current_post_format));
 		}
-		
 		array_unshift($post_formats[0], 'standard');
-		
 		$post_formats = $post_formats[0];
+
 		include('views/tabs.php');
-		include('views/format-link.php');
-		include('views/format-quote.php');
-		include('views/format-video.php');
-		include('views/format-gallery.php');
+
+		$format_views = array(
+			'link',
+			'quote',
+			'video',
+			'gallery',
+			'audio',
+		);
+		foreach ($format_views as $format) {
+			if (in_array($format, $post_formats)) {
+				include('views/format-'.$format.'.php');
+			}
+		}
 	}
 }
 
@@ -95,7 +122,7 @@ function cfpf_format_link_save_post($post_id) {
 		update_post_meta($post_id, '_format_link_url', $_POST['_format_link_url']);
 	}
 }
-add_action('save_post', 'cfpf_format_link_save_post');
+// action added in cfpf_admin_init()
 
 function cfpf_format_auto_title_post($post_id, $post) {
 	remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
@@ -121,7 +148,7 @@ function cfpf_format_status_save_post($post_id, $post) {
 		cfpf_format_auto_title_post($post_id, $post);
 	}
 }
-add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
+// action added in cfpf_admin_init()
 
 function cfpf_format_quote_save_post($post_id, $post) {
 	if (!defined('XMLRPC_REQUEST')) {
@@ -139,14 +166,21 @@ function cfpf_format_quote_save_post($post_id, $post) {
 		cfpf_format_auto_title_post($post_id, $post);
 	}
 }
-add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+// action added in cfpf_admin_init()
 
 function cfpf_format_video_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_video_embed'])) {
 		update_post_meta($post_id, '_format_video_embed', $_POST['_format_video_embed']);
 	}
 }
-add_action('save_post', 'cfpf_format_video_save_post');
+// action added in cfpf_admin_init()
+
+function cfpf_format_audio_save_post($post_id) {
+	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_audio_embed'])) {
+		update_post_meta($post_id, '_format_audio_embed', $_POST['_format_audio_embed']);
+	}
+}
+// action added in cfpf_admin_init()
 
 function cfpf_gallery_preview() {
 	global $post;
