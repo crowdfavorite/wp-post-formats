@@ -14,9 +14,9 @@ jQuery(function($) {
 				}
 			},
 			
-			switchWPFormat: function(format_hash) {
-				$(format_hash).trigger('click');
-				switch (format_hash) {
+			switchWPFormat: function(formatHash) {
+				$(formatHash).trigger('click');
+				switch (formatHash) {
 					case '#post-format-0':
 					case '#post-format-aside':
 					case '#post-format-chat':
@@ -29,9 +29,9 @@ jQuery(function($) {
 					case '#post-format-video':
 					case '#post-format-quote':
 					case '#post-format-audio':
-						eval('CF.postFormats.' + format_hash.replace('#post-format-', '') + '();');
+						eval('CF.postFormats.' + formatHash.replace('#post-format-', '') + '();');
 				}
-				$.trigger('cf-post-formats-switch');
+				$.trigger('cf-post-formats-switch', formatHash);
 			},
 
 			standard: function() {
