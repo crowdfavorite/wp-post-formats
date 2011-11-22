@@ -29,9 +29,9 @@ jQuery(function($) {
 					case '#post-format-video':
 					case '#post-format-quote':
 					case '#post-format-audio':
-						eval('CF.postFormats.' + formatHash.replace('#post-format-', '') + '();');
+						CF.postFormats[formatHash.replace('#post-format-', '')]();
 				}
-				$.trigger('cf-post-formats-switch', formatHash);
+				$(document).trigger('cf-post-formats-switch', formatHash);
 			},
 
 			standard: function() {
@@ -93,7 +93,7 @@ jQuery(function($) {
 	}).end().insertAfter($('#titlediv'));
 	$('#cfpf-format-quote-fields').insertAfter($('#titlediv'));
 	
-	$.trigger('cf-post-formats-init');
+	$(document).trigger('cf-post-formats-init');
 	
 	// tab switch
 	$('#cf-post-format-tabs a').live('click', function(e) {
