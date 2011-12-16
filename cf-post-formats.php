@@ -3,7 +3,7 @@
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
 Description: Custom post format admin screens
-Version: 1.0dev
+Version: 1.0
 Author: crowdfavorite
 Author URI: http://crowdfavorite.com 
 */
@@ -30,7 +30,9 @@ Author URI: http://crowdfavorite.com
  * **********************************************************************
  */
 
-define('CFPF_VERSION', '0.3');
+if (!defined('CFPF_VERSION')) {
+
+define('CFPF_VERSION', '1.0');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
@@ -222,3 +224,5 @@ function cfpf_pre_ping_post_links($post_links, $post_id) {
 	return $post_links;
 }
 add_filter('pre_ping_post_links', 'cfpf_pre_ping_post_links', 10, 2);
+
+} // end defined check
