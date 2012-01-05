@@ -187,8 +187,11 @@ function cfpf_format_audio_save_post($post_id) {
 // action added in cfpf_admin_init()
 
 function cfpf_gallery_preview() {
+	if (empty($_POST['id']) && !($post_id = intval($_POST['id']))) {
+		exit;
+	}
 	global $post;
-	$post->ID = intval($_POST['id']);
+	$post->ID = $post_id;
 	ob_start();
 	include('views/format-gallery.php');
 	$html = ob_get_clean();

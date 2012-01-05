@@ -71,15 +71,16 @@
 	padding: 0;
 }
 .cp-elm-block .cp-elm-container .gallery {
+	margin: 0;
 	padding-bottom: 8px;
 }
-.cp-elm-block .cp-elm-container .gallery dl,
-.cp-elm-block .cp-elm-container .gallery dt {
-	display: inline;
-}
-.cp-elm-block .cp-elm-image-gallery dt {
-	margin: 0 5px 5px 0;
+.cp-elm-block .cp-elm-container .gallery li {
+	display: inline-block;
+	margin: 0 8px 8px 0;
 	padding: 0;
+}
+.cp-elm-block .cp-elm-container .gallery li img {
+	vertical-align: middle;
 }
 
 /* Video Field */
