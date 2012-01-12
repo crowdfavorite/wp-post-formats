@@ -187,7 +187,7 @@ function cfpf_format_audio_save_post($post_id) {
 // action added in cfpf_admin_init()
 
 function cfpf_gallery_preview() {
-	if (empty($_POST['id']) && !($post_id = intval($_POST['id']))) {
+	if (empty($_POST['id']) || !($post_id = intval($_POST['id']))) {
 		exit;
 	}
 	global $post;

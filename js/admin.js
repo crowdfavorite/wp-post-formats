@@ -105,7 +105,7 @@ jQuery(function($) {
 	});
 	
 	// refresh gallery on lightbox close
-	$('#TB_window').live('unload', function() {
+	$('#TB_window').live('tb_unload unload', function() {
 		if (!$('#cfpf-format-gallery-preview').is(':visible')) {
 			return;
 		}
