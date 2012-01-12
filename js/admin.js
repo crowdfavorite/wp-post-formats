@@ -131,7 +131,7 @@ jQuery(function($) {
 	});
 	
 	$('#cfpf-format-gallery-preview .none a').live('click', function(e) {
-		$('#add_image, #content-add_media').click();
+		$('#add_image, #content-add_media').mousedown().mouseup().click();
 		e.preventDefault();
 	});
 	
