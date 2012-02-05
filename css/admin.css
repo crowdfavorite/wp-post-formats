@@ -11,11 +11,11 @@
 .clearfix { zoom: 1; }
 
 
-.cp-elm-block {
+.cf-elm-block {
 	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 	margin-bottom: 18px;
 }
-.cp-elm-block label {
+.cf-elm-block label {
 	color: #666;
 	display: block;
 	font: italic normal 12px Georgia, Serif;
@@ -24,10 +24,10 @@
 	text-transform: uppercase;
 	text-shadow: 0 1px 1px #fff;
 }
-.cp-elm-block input[type="text"],
-.cp-elm-block textarea,
-.cp-elm-block select,
-.cp-elm-block .cp-elm-container {
+.cf-elm-block input[type="text"],
+.cf-elm-block textarea,
+.cf-elm-block select,
+.cf-elm-block .cf-elm-container {
 	-moz-border-radius: 6px; /* FF1+ */
 	-webkit-border-radius: 6px; /* Saf3+, Chrome */
 	-khtml-border-radius: 6px; /* Konqueror */
@@ -36,49 +36,49 @@
 	border: 1px #dfdfdf solid;
 	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 }
-.cp-elm-block input[type="text"],
-.cp-elm-block textarea {
+.cf-elm-block input[type="text"],
+.cf-elm-block textarea {
 	font-size: 18px;
 	width: 100%;
 }
-.cp-elm-block textarea {
+.cf-elm-block textarea {
 	height: 161px;
 	padding: 8px 11px;
 }
-.cp-elm-block input[type="text"] {
+.cf-elm-block input[type="text"] {
 	padding: 5px 8px;
 }
-.cp-elm-block .description {
+.cf-elm-block .description {
 	color: #999;
 	display: block;
 	font-size: 11px;
 	line-height: 1.6;
 	padding-left: 8px;
 }
-.cp-elm-block .cp-elm-source {
+.cf-elm-block .cf-elm-source {
 	height: 96px;
 }
-.cp-elm-block .cp-elm-container {
+.cf-elm-block .cf-elm-container {
 	background: #f0f0f0;
 	padding: 10px;
 }
-.cp-elm-block .cp-elm-container p.none {
+.cf-elm-block .cf-elm-container p.none {
 	text-align: center;
 }
-.cp-elm-block .cp-elm-image-gallery {
+.cf-elm-block .cf-elm-image-gallery {
 	margin: 0 0 -5px 0;
 	padding: 0;
 }
-.cp-elm-block .cp-elm-container .gallery {
+.cf-elm-block .cf-elm-container .gallery {
 	margin: 0;
 	padding-bottom: 8px;
 }
-.cp-elm-block .cp-elm-container .gallery li {
+.cf-elm-block .cf-elm-container .gallery li {
 	display: inline-block;
 	margin: 0 8px 8px 0;
 	padding: 0;
 }
-.cp-elm-block .cp-elm-container .gallery li img {
+.cf-elm-block .cf-elm-container .gallery li img {
 	vertical-align: middle;
 }
 

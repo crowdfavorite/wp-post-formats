@@ -1,6 +1,6 @@
-<div id="cfpf-format-gallery-preview" class="cp-elm-block cp-elm-block-image" style="display: none;">
+<div id="cfpf-format-gallery-preview" class="cf-elm-block cf-elm-block-image" style="display: none;">
 	<label><span><?php _e('Gallery Images', 'cf-post-format'); ?></span></label>
-	<div class="cp-elm-container">
+	<div class="cf-elm-container">
 
 <?php
 

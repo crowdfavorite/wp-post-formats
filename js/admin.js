@@ -111,7 +111,7 @@ jQuery(function($) {
 		}
 		var $preview = $('#cfpf-format-gallery-preview');
 // spinner
-		$preview.find('.cp-elm-container').html('<p><img src="' + cfpf_post_format.wpspin_light + '" alt="' + cfpf_post_format.loading + '" /></p>');
+		$preview.find('.cf-elm-container').html('<p><img src="' + cfpf_post_format.wpspin_light + '" alt="' + cfpf_post_format.loading + '" /></p>');
 // AJAX call for gallery snippet
 		$.post(
 			ajaxurl,
