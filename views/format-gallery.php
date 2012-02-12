@@ -10,7 +10,9 @@ $attachments = get_posts(array(
 	'post_type' => 'attachment',
 	'numberposts' => -1,
 	'post_status' => null,
-	'post_parent' => $post->ID
+	'post_parent' => $post->ID,
+	'order' => 'ASC',
+	'orderby' => 'menu_order ID',
 ));
 if ($attachments) {
 	echo '<ul class="gallery">';
