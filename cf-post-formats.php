@@ -9,7 +9,7 @@ Author URI: http://crowdfavorite.com
 */
 
 /**
- * Copyright (c) 2011 Crowd Favorite, Ltd. All rights reserved.
+ * Copyright (c) 2011-2012 Crowd Favorite, Ltd. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
