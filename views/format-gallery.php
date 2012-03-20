@@ -1,9 +1,27 @@
-<div id="cfpf-format-gallery-preview" class="cp-elm-block cp-elm-block-image" style="display: none;">
+<div id="cfpf-format-gallery-preview" class="cf-elm-block cf-elm-block-image" style="display: none;">
 	<label><span><?php _e('Gallery Images', 'cf-post-format'); ?></span></label>
-	<div class="cp-elm-container">
+	<div class="cf-elm-container">
 
 <?php
-	echo do_shortcode('[gallery columns="9999"]');
+
+// running this in the view so it can be used by multiple functions
+
+$attachments = get_posts(array(
+	'post_type' => 'attachment',
+	'numberposts' => -1,
+	'post_status' => null,
+	'post_parent' => $post->ID,
+	'order' => 'ASC',
+	'orderby' => 'menu_order ID',
+));
+if ($attachments) {
+	echo '<ul class="gallery">';
+	foreach ($attachments as $attachment) {
+		echo '<li>'.wp_get_attachment_image($attachment->ID, 'thumbnail').'</li>';
+	}
+	echo '</ul>';
+}
+
 ?>
 <p class="none"><a href="#" class="button"><?php _e('Upload Images', 'cf-post-format'); ?></a></p>
 	</div>
