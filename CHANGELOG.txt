@@ -1,0 +1,12 @@
+# CF Post Formats
+
+
+## Version 1.0.1
+
+- added CHANGELOG
+- add compatibility with `pre_ping` changes in WordPress 3.4
+
+
+## Version 1.0
+
+- first public release
