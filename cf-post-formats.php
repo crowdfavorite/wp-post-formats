@@ -2,8 +2,8 @@
 /*
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
-Description: Custom post format admin screens
-Version: 1.0
+Description: Custom post format admin UI
+Version: 1.0.1
 Author: crowdfavorite
 Author URI: http://crowdfavorite.com 
 */
@@ -32,7 +32,7 @@ Author URI: http://crowdfavorite.com
 
 if (!defined('CFPF_VERSION')) {
 
-define('CFPF_VERSION', '1.0');
+define('CFPF_VERSION', '1.0.1');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
@@ -217,15 +217,16 @@ function cfpf_post_has_gallery($post_id = null) {
 	return (bool) $images->post_count;
 }
 
-// this will send pingbacks properly when this ticket is accepted
-// http://core.trac.wordpress.org/ticket/18506
-function cfpf_pre_ping_post_links($post_links, $post_id) {
+function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
+	// return if we don't get a post ID (pre WP 3.4)
+	if (empty($post_id)) {
+		return;
+	}
 	$url = get_post_meta($post_id, '_format_link_url', true);
-	if (!empty($url) && !in_array($url, $post_links)) {
+	if (!empty($url) && !in_array($url, $pung) && !in_array($url, $post_links)) {
 		$post_links[] = $url;
 	}
-	return $post_links;
 }
-add_filter('pre_ping_post_links', 'cfpf_pre_ping_post_links', 10, 2);
+add_filter('pre_ping', 'cfpf_pre_ping_post_links', 10, 3);
 
 } // end defined check
