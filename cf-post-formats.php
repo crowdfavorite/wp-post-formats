@@ -2,8 +2,8 @@
 /*
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
-Description: Custom post format admin screens
-Version: 1.0
+Description: Custom post format admin UI
+Version: 1.0.1
 Author: crowdfavorite
 Author URI: http://crowdfavorite.com 
 */
@@ -32,7 +32,7 @@ Author URI: http://crowdfavorite.com
 
 if (!defined('CFPF_VERSION')) {
 
-define('CFPF_VERSION', '1.0');
+define('CFPF_VERSION', '1.0.1');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
