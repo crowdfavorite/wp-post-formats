@@ -65,7 +65,7 @@ jQuery(function($) {
 			},
 
 			video: function() {
-				$('#cfpf-format-link-url, #cfpf-format-quote-fields, #cfpf-format-gallery-preview').hide();
+				$('#cfpf-format-link-url, #cfpf-format-quote-fields, #cfpf-format-gallery-preview, #cfpf-format-audio-fields').hide();
 				$('#titlewrap, #cfpf-format-video-fields').show();
 				$('#postimagediv-placeholder').replaceWith($('#postimagediv'));
 			},
