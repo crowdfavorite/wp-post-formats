@@ -47,7 +47,7 @@ jQuery(function($) {
 			},
 
 			link: function() {
-				$('#cfpf-format-quote-field, #cfpf-format-video-fields, #cfpf-format-audio-fields, #cfpf-format-gallery-preview').hide();
+				$('#cfpf-format-quote-fields, #cfpf-format-video-fields, #cfpf-format-audio-fields, #cfpf-format-gallery-preview').hide();
 				$('#titlewrap, #cfpf-format-link-url').show();
 				$('#postimagediv-placeholder').replaceWith($('#postimagediv'));
 			},
