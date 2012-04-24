@@ -33,29 +33,24 @@ Author URI: http://crowdfavorite.com
 if (!defined('CFPF_VERSION')) {
 
 define('CFPF_VERSION', '1.0.1');
-
+$format_views = array(
+	'link',
+	'quote',
+	'video',
+	'gallery',
+	'audio',
+);
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
 }
 
 function cfpf_admin_init() {
+	global $format_views;
 	$post_formats = get_theme_support('post-formats');
 	if (!empty($post_formats[0]) && is_array($post_formats[0])) {
-		if (in_array('link', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_link_save_post');
-		}
-		if (in_array('status', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
-		}
-		if (in_array('quote', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
-		}
-		if (in_array('video', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_video_save_post');
-		}
-		if (in_array('audio', $post_formats[0])) {
-			add_action('save_post', 'cfpf_format_audio_save_post');
-		}
+		foreach( $format_views as $f_v )
+		if (in_array($f_v, $post_formats[0]))
+			add_action('save_post', 'cfpf_format_' . $f_v . '_save_post', 10, 2);
 	}
 }
 add_action('admin_init', 'cfpf_admin_init');
@@ -91,37 +86,28 @@ add_action('add_meta_boxes', 'cfpf_add_meta_boxes');
 function cfpf_post_admin_setup() {
 	$post_formats = get_theme_support('post-formats');
 	if (!empty($post_formats[0]) && is_array($post_formats[0])) {
-		global $post;
+		global $post, $format_views;
 		$current_post_format = get_post_format($post->ID);
 
 		// support the possibility of people having hacked in custom 
 		// post-formats or that this theme doesn't natively support
 		// the post-format in the current post - a tab will be added
 		// for this format but the default WP post UI will be shown ~sp
-		if (!empty($current_post_format) && !in_array($current_post_format, $post_formats[0])) {
+		if (!empty($current_post_format) && !in_array($current_post_format, $post_formats[0]))
 			array_push($post_formats[0], get_post_format_string($current_post_format));
-		}
 		array_unshift($post_formats[0], 'standard');
 		$post_formats = $post_formats[0];
 
 		include('views/tabs.php');
 
-		$format_views = array(
-			'link',
-			'quote',
-			'video',
-			'gallery',
-			'audio',
-		);
 		foreach ($format_views as $format) {
-			if (in_array($format, $post_formats)) {
+			if (in_array($format, $post_formats))
 				include('views/format-'.$format.'.php');
-			}
 		}
 	}
 }
 
-function cfpf_format_link_save_post($post_id) {
+function cfpf_format_link_save_post($post_id, $post) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_link_url'])) {
 		update_post_meta($post_id, '_format_link_url', $_POST['_format_link_url']);
 	}
@@ -133,10 +119,7 @@ function cfpf_format_auto_title_post($post_id, $post) {
 	remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
 
 	$content = trim(strip_tags($post->post_content));
-	$title = substr($content, 0, 50);
-	if (strlen($content) > 50) {
-		$title .= '...';
-	}
+	$title = strlen($content) > 50 ? substr($content, 0, 50) : substr($content, 0, 50).'...';
 	$title = apply_filters('cfpf_format_auto_title', $title, $post);
 	wp_update_post(array(
 		'ID' => $post_id,
@@ -155,16 +138,9 @@ function cfpf_format_status_save_post($post_id, $post) {
 // action added in cfpf_admin_init()
 
 function cfpf_format_quote_save_post($post_id, $post) {
-	if (!defined('XMLRPC_REQUEST')) {
-		$keys = array(
-			'_format_quote_source_name',
-			'_format_quote_source_url',
-		);
-		foreach ($keys as $key) {
-			if (isset($_POST[$key])) {
-				update_post_meta($post_id, $key, $_POST[$key]);
-			}
-		}
+	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_quote_source_name']) && isset($_POST['_format_quote_source_url'])) {
+				update_post_meta($post_id, '_format_quote_source_name', $_POST['_format_quote_source_name']);
+				update_post_meta($post_id, '_format_quote_source_url', $_POST['_format_quote_source_url']);
 	}
 	if (has_post_format('quote', $post)) {
 		cfpf_format_auto_title_post($post_id, $post);
@@ -202,9 +178,8 @@ function cfpf_gallery_preview() {
 add_action('wp_ajax_cfpf_gallery_preview', 'cfpf_gallery_preview');
 
 function cfpf_post_has_gallery($post_id = null) {
-	if (empty($post_id)) {
+	if (empty($post_id))
 		$post_id = get_the_ID();
-	}
 	$images = new WP_Query(array(
 		'post_parent' => $post_id,
 		'post_type' => 'attachment',
@@ -219,9 +194,8 @@ function cfpf_post_has_gallery($post_id = null) {
 
 function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
 	// return if we don't get a post ID (pre WP 3.4)
-	if (empty($post_id)) {
+	if (empty($post_id))
 		return;
-	}
 	$url = get_post_meta($post_id, '_format_link_url', true);
 	if (!empty($url) && !in_array($url, $pung) && !in_array($url, $post_links)) {
 		$post_links[] = $url;
