@@ -140,7 +140,8 @@ function cfpf_format_auto_title_post($post_id, $post) {
 	$title = apply_filters('cfpf_format_auto_title', $title, $post);
 	wp_update_post(array(
 		'ID' => $post_id,
-		'post_title' => $title
+        'post_title' => $title,
+        'post_name' => sanitize_title_with_dashes($title)
 	));
 
 	add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
