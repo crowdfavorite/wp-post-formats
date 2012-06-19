@@ -106,9 +106,6 @@ jQuery(function($) {
 	
 	// refresh gallery on lightbox close
 	$('#TB_window').live('tb_unload unload', function() {
-		if (!$('#cfpf-format-gallery-preview').is(':visible')) {
-			return;
-		}
 		var $preview = $('#cfpf-format-gallery-preview');
 // spinner
 		$preview.find('.cf-elm-container').html('<p><img src="' + cfpf_post_format.wpspin_light + '" alt="' + cfpf_post_format.loading + '" /></p>');
@@ -122,9 +119,15 @@ jQuery(function($) {
 			function(response) {
 // replace
 				$preview.replaceWith(response.html);
-				$('#cfpf-format-gallery-preview').find('dt a').each(function() {
+// find it again
+				$preview = $('#cfpf-format-gallery-preview')
+				$preview.find('dt a').each(function() {
 					$(this).replaceWith($(this.childNodes)); // remove links
-				}).end().show();
+				}).end();
+// only show if tab is selected
+				if ($('#cf-post-format-tabs a.current').attr('href').indexOf('#post-format-gallery') != -1) {
+					$preview.show();
+				}
 			},
 			'json'
 		);
