@@ -229,4 +229,21 @@ function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
 }
 add_filter('pre_ping', 'cfpf_pre_ping_post_links', 10, 3);
 
+// For integration with Social plugin (strips {title} from broadcast format on status posts)
+function cfpf_social_broadcast_format($format, $post) {
+	if (get_post_format($post) == 'status') {
+		$format = trim(str_replace(
+			array(
+				'{title}:',
+				'{title} -',
+				'{title}',
+			),
+			'',
+			$format
+		));
+	}
+	return $format;
+}
+add_filter('social_broadcast_format', 'cfpf_social_broadcast_format', 10, 2);
+
 } // end defined check
