@@ -1,6 +1,13 @@
 # CF Post Formats
 
 
+## Version 1.0.2
+
+- Gallery is displayed as expected when images have already been uploaded before gallery tab is selected
+- Fix audio fields showing on Video tab (props DrewAPicture)
+- Fix quote fields showing on Link tab (props dariodev)
+- Compatibility with Social broadcasting of Status posts
+
 ## Version 1.0.1
 
 - added CHANGELOG
