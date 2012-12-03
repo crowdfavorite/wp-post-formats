@@ -87,6 +87,21 @@
 	height: 65px;
 }
 
+/* Featured Image */
+#post-body-content #select-featured-image {
+	text-align: center;
+}
+#post-body-content #select-featured-image img {
+	display: block;
+	margin: 0 auto 4px;
+}
+#post-body-content #select-featured-image a {
+	float: none;
+}
+#post-body-content #select-featured-image a.button-secondary {
+	margin-right: 10px;
+}
+
 /** tab navigation
  -------------------------------------------------- */
 .cf-nav {
