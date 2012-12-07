@@ -32,7 +32,7 @@ Author URI: http://crowdfavorite.com
 
 if (!defined('CFPF_VERSION')) {
 
-define('CFPF_VERSION', '1.0.2');
+define('CFPF_VERSION', '1.0.3');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
