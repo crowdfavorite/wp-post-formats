@@ -3,7 +3,7 @@
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
 Description: Custom post format admin UI
-Version: 1.0.2
+Version: 1.0.3
 Author: crowdfavorite
 Author URI: http://crowdfavorite.com 
 */
