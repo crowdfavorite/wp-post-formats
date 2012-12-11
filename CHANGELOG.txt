@@ -1,5 +1,9 @@
 # CF Post Formats
 
+## Version 1.1
+
+- WordPress 3.5 compatibility
+- Requires WordPress 3.5
 
 ## Version 1.0.2
 

@@ -103,9 +103,21 @@ jQuery(function($) {
 	}).filter('.current').each(function() {
 		CF.postFormats.switchWPFormat($(this).attr('href'));
 	});
+
+	// WordPress 3.5 compatibility
+	// props: https://gist.github.com/4192094
 	
-	// refresh gallery on lightbox close
-	$('#TB_window').live('tb_unload unload', function() {
+	var postId = $('#post_ID').val();
+	var gallery = wp.media.query({ uploadedTo: postId });
+
+	// Run the query.
+	// This returns a promise (like $.ajax) so you can do things when it completes.
+	gallery.more();
+
+	// Bind your events for when the contents of the gallery changes.
+	gallery.on( 'add remove reset', function() {
+		// Something changed, update your stuff.
+
 		var $preview = $('#cfpf-format-gallery-preview');
 // spinner
 		$preview.find('.cf-elm-container').html('<p><img src="' + cfpf_post_format.wpspin_light + '" alt="' + cfpf_post_format.loading + '" /></p>');
@@ -131,11 +143,13 @@ jQuery(function($) {
 			},
 			'json'
 		);
-	});
+
+	}, gallery );
+
 	
 	$('#cfpf-format-gallery-preview .none a').live('click', function(e) {
-		$('#add_image, #content-add_media').mousedown().mouseup().click();
+		$('#wp-content-media-buttons .insert-media').mousedown().mouseup().click();
 		e.preventDefault();
 	});
-	
+
 });
