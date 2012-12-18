@@ -78,6 +78,7 @@ function cfpf_add_meta_boxes($post_type) {
 		);
 		
 		add_action('edit_form_advanced', 'cfpf_post_admin_setup');
+		add_action('edit_page_form', 'cfpf_post_admin_setup');
 	}
 }
 add_action('add_meta_boxes', 'cfpf_add_meta_boxes');
