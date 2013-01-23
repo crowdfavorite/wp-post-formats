@@ -158,6 +158,8 @@ function cfpf_format_quote_save_post($post_id, $post) {
 	if (!defined('XMLRPC_REQUEST')) {
 		$keys = array(
 			'_format_quote_source_name',
+			'_format_quote_source_title',
+			'_format_quote_source_date',
 			'_format_quote_source_url',
 		);
 		foreach ($keys as $key) {
