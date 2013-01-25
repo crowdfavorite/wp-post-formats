@@ -133,10 +133,15 @@ function cfpf_format_auto_title_post($post_id, $post) {
 	remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
 
 	$content = trim(strip_tags($post->post_content));
-	$title = substr($content, 0, 50);
+	//$title = substr($content, 0, 50);
+	// Break down titles by words instead of characters
+	$words = 10;
+	preg_match("/(\S+\s*){0,$words}/", $content, $result);
+  	$title = trim($result[0]);
 	if (strlen($content) > 50) {
 		$title .= '...';
 	}
+
 	$title = apply_filters('cfpf_format_auto_title', $title, $post);
 	wp_update_post(array(
 		'ID' => $post_id,
