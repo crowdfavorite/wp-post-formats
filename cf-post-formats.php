@@ -130,7 +130,7 @@ function cfpf_format_link_save_post($post_id) {
 
 function cfpf_format_auto_title_post($post_id, $post) {
 
-	if ( $post->post_title ) {
+	if ( empty($post->post_title) ) {
 
 		remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
 		remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
