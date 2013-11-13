@@ -1,5 +1,9 @@
 # CF Post Formats
 
+## Version 1.2
+
+- (fix) Don't auto-set the post title for status posts if a title already exists
+
 ## Version 1.1
 
 - WordPress 3.5 compatibility
