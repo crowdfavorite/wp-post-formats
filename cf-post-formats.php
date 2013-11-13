@@ -3,13 +3,13 @@
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
 Description: Custom post format admin UI
-Version: 1.1
+Version: 1.2
 Author: crowdfavorite
 Author URI: http://crowdfavorite.com
 */
 
 /**
- * Copyright (c) 2011-2012 Crowd Favorite, Ltd. All rights reserved.
+ * Copyright (c) 2011-2013 Crowd Favorite, Ltd. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -32,7 +32,7 @@ Author URI: http://crowdfavorite.com
 
 if (!defined('CFPF_VERSION')) {
 
-define('CFPF_VERSION', '1.1');
+define('CFPF_VERSION', '1.2');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
@@ -129,28 +129,27 @@ function cfpf_format_link_save_post($post_id) {
 // action added in cfpf_admin_init()
 
 function cfpf_format_auto_title_post($post_id, $post) {
-
-	if ( empty($post->post_title) ) {
-
-		remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
-		remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
-
-		$content = trim(strip_tags($post->post_content));
-		$title = substr($content, 0, 50);
-		if (strlen($content) > 50) {
-			$title .= '...';
-		}
-		$title = apply_filters('cfpf_format_auto_title', $title, $post);
-		wp_update_post(array(
-			'ID' => $post_id,
-			'post_title' => $title
-		));
-
-		add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
-		add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
-
+	// get out early if a title is already set
+	if (!empty($post->post_title)) {
+		return;
 	}
 
+	remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
+	remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
+
+	$content = trim(strip_tags($post->post_content));
+	$title = substr($content, 0, 50);
+	if (strlen($content) > 50) {
+		$title .= '...';
+	}
+	$title = apply_filters('cfpf_format_auto_title', $title, $post);
+	wp_update_post(array(
+		'ID' => $post_id,
+		'post_title' => $title
+	));
+
+	add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
+	add_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
 }
 
 function cfpf_format_status_save_post($post_id, $post) {
