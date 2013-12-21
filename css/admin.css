@@ -122,16 +122,12 @@
 .cf-nav ul li a {
 	display: block;
 	color: #999;
-	background-color: #f1f1f1;
-	background-image: -moz-linear-gradient(-90deg, #f9f9f9 , #ececec );
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#f9f9f9),to(#ececec));
-	background-image: linear-gradient(top,#f9f9f9,#ececec);
+	background-color: #eee;
 	border: 1px solid #ddd;
 	border-bottom: 0;
-	font-size: 15px;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	height: 29px;
-	line-height: 29px;
+	font-size: 12px;
+	height: 25px;
+	line-height: 25px;
 	margin-right: 5px;
 	padding: 0 10px;
 	text-decoration: none;
@@ -149,7 +145,7 @@
 .cf-nav ul li a.current {
 	background: none;
 	border: 1px solid #ccc;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #f1f1f1;
 	color: #464646;
 	margin-bottom: -1px;
 }
