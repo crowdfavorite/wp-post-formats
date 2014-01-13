@@ -196,7 +196,7 @@ function cfpf_gallery_preview() {
 		exit;
 	}
 	global $post;
-	$post->ID = $post_id;
+	$post = get_post($post_id);
 	ob_start();
 	include('views/format-gallery.php');
 	$html = ob_get_clean();
