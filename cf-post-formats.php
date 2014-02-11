@@ -3,13 +3,13 @@
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
 Description: Custom post format admin UI
-Version: 1.1
+Version: 1.3.1
 Author: crowdfavorite
-Author URI: http://crowdfavorite.com 
+Author URI: http://crowdfavorite.com
 */
 
 /**
- * Copyright (c) 2011-2012 Crowd Favorite, Ltd. All rights reserved.
+ * Copyright (c) 2011-2013 Crowd Favorite, Ltd. All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -22,7 +22,7 @@ Author URI: http://crowdfavorite.com
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -32,7 +32,7 @@ Author URI: http://crowdfavorite.com
 
 if (!defined('CFPF_VERSION')) {
 
-define('CFPF_VERSION', '1.1');
+define('CFPF_VERSION', '1.3');
 
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
@@ -69,14 +69,14 @@ function cfpf_add_meta_boxes($post_type) {
 		wp_enqueue_style('cf-post-formats', cfpf_base_url().'css/admin.css', array(), CFPF_VERSION, 'screen');
 
 		wp_localize_script(
-			'cf-post-formats', 
-			'cfpf_post_format', 
+			'cf-post-formats',
+			'cfpf_post_format',
 			array(
 				'loading' => __('Loading...', 'cf-post-formats'),
 				'wpspin_light' => admin_url('images/wpspin_light.gif')
 			)
 		);
-		
+
 		add_action('edit_form_after_title', 'cfpf_post_admin_setup');
 	}
 }
@@ -94,7 +94,7 @@ function cfpf_post_admin_setup() {
 		global $post;
 		$current_post_format = get_post_format($post->ID);
 
-		// support the possibility of people having hacked in custom 
+		// support the possibility of people having hacked in custom
 		// post-formats or that this theme doesn't natively support
 		// the post-format in the current post - a tab will be added
 		// for this format but the default WP post UI will be shown ~sp
@@ -129,6 +129,11 @@ function cfpf_format_link_save_post($post_id) {
 // action added in cfpf_admin_init()
 
 function cfpf_format_auto_title_post($post_id, $post) {
+	// get out early if a title is already set
+	if (!empty($post->post_title)) {
+		return;
+	}
+
 	remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
 	remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
 

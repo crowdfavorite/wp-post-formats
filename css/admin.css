@@ -12,29 +12,20 @@
 
 
 .cf-elm-block {
-	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 	margin-bottom: 18px;
 }
 .cf-elm-block label {
 	color: #666;
 	display: block;
-	font: italic normal 12px Georgia, Serif;
 	margin-bottom: 2px;
-	padding-left: 8px;
+	padding-left: 10px;
 	text-transform: uppercase;
-	text-shadow: 0 1px 1px #fff;
 }
 .cf-elm-block input[type="text"],
 .cf-elm-block textarea,
 .cf-elm-block select,
 .cf-elm-block .cf-elm-container {
-	-moz-border-radius: 6px; /* FF1+ */
-	-webkit-border-radius: 6px; /* Saf3+, Chrome */
-	-khtml-border-radius: 6px; /* Konqueror */
-	border-radius: 6px; /* Standard. IE9 */
-	
 	border: 1px #dfdfdf solid;
-	font-family: "Lucida Grande", Verdana, Arial, "Bitstream Vera Sans", sans-serif;
 }
 .cf-elm-block input[type="text"],
 .cf-elm-block textarea {
@@ -43,17 +34,17 @@
 }
 .cf-elm-block textarea {
 	height: 161px;
-	padding: 8px 11px;
+	padding-left: 8px;
 }
 .cf-elm-block input[type="text"] {
-	padding: 5px 8px;
+	padding-left: 8px;
 }
 .cf-elm-block .description {
 	color: #999;
 	display: block;
 	font-size: 11px;
 	line-height: 1.6;
-	padding-left: 8px;
+	padding-left: 10px;
 }
 .cf-elm-block .cf-elm-source {
 	height: 96px;
@@ -82,6 +73,10 @@
 	vertical-align: middle;
 }
 
+#cfpf-format-gallery-preview .cf-elm-container {
+	background: #fff;
+}
+
 /* Video Field */
 #cfpf-format-video-embed {
 	height: 65px;
@@ -100,6 +95,10 @@
 }
 #post-body-content #select-featured-image a.button-secondary {
 	margin-right: 10px;
+}
+
+#cf-post-format-tabs {
+	margin-bottom: 0;
 }
 
 /** tab navigation
@@ -122,16 +121,12 @@
 .cf-nav ul li a {
 	display: block;
 	color: #999;
-	background-color: #f1f1f1;
-	background-image: -moz-linear-gradient(-90deg, #f9f9f9 , #ececec );
-	background-image: -webkit-gradient(linear,left top,left bottom,from(#f9f9f9),to(#ececec));
-	background-image: linear-gradient(top,#f9f9f9,#ececec);
+	background-color: #eee;
 	border: 1px solid #ddd;
 	border-bottom: 0;
-	font-size: 15px;
-	font-family: Georgia,"Times New Roman","Bitstream Charter",Times,serif;
-	height: 29px;
-	line-height: 29px;
+	font-size: 12px;
+	height: 25px;
+	line-height: 25px;
 	margin-right: 5px;
 	padding: 0 10px;
 	text-decoration: none;
@@ -149,8 +144,10 @@
 .cf-nav ul li a.current {
 	background: none;
 	border: 1px solid #ccc;
-	border-bottom: 1px solid #fff;
+	border-bottom: 1px solid #f1f1f1;
 	color: #464646;
 	margin-bottom: -1px;
 }
-
+.cf-nav ul li a:focus {
+	outline: none;
+}
