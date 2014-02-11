@@ -141,11 +141,11 @@ function cfpf_format_auto_title_post($post_id, $post) {
 	$words = 10;
 	preg_match("/(\S+\s*){0,$words}/", trim(strip_tags($post->post_content)), $result);
 
-  	// Trim punctuaction, symbols, and whitespace from the beginning and end of the title
-  	$title = preg_replace("/^[\p{P}|\p{S}|\s]+|[\p{P}|\p{S}|\s]+$/", "", $result[0]);
-  	// Alternately: $title = trim($result[0], ' ?!:;.,_-~<>(){}[]\'"`/\\+=');
-	
-  	// Add an ellipsis if the word count is maxed out
+  // Trim punctuaction, symbols, and whitespace from the beginning and end of the title
+  $title = preg_replace("/^[\p{P}|\p{S}|\s]+|[\p{P}|\p{S}|\s]+$/", "", $result[0]);
+  // Alternately: $title = trim($result[0], ' ?!:;.,_-~<>(){}[]\'"`/\\+=');
+
+  // Add an ellipsis if the word count is maxed out
 	if (str_word_count($title) >= $words) {
 		$title .= '...';
 	}
