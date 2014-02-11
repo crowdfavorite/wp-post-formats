@@ -137,11 +137,19 @@ function cfpf_format_auto_title_post($post_id, $post) {
 	remove_action('save_post', 'cfpf_format_status_save_post', 10, 2);
 	remove_action('save_post', 'cfpf_format_quote_save_post', 10, 2);
 
-	$content = trim(strip_tags($post->post_content));
-	$title = substr($content, 0, 50);
-	if (strlen($content) > 50) {
+	// Break down titles by words instead of characters and strip punctuation
+	$words = 10;
+	preg_match("/(\S+\s*){0,$words}/", trim(strip_tags($post->post_content)), $result);
+
+  // Trim punctuaction, symbols, and whitespace from the beginning and end of the title
+  $title = preg_replace("/^[\p{P}|\p{S}|\s]+|[\p{P}|\p{S}|\s]+$/", "", $result[0]);
+  // Alternately: $title = trim($result[0], ' ?!:;.,_-~<>(){}[]\'"`/\\+=');
+
+  // Add an ellipsis if the word count is maxed out
+	if (str_word_count($title) >= $words) {
 		$title .= '...';
 	}
+
 	$title = apply_filters('cfpf_format_auto_title', $title, $post);
 	wp_update_post(array(
 		'ID' => $post_id,
@@ -163,6 +171,8 @@ function cfpf_format_quote_save_post($post_id, $post) {
 	if (!defined('XMLRPC_REQUEST')) {
 		$keys = array(
 			'_format_quote_source_name',
+			'_format_quote_source_title',
+			'_format_quote_source_date',
 			'_format_quote_source_url',
 		);
 		foreach ($keys as $key) {
