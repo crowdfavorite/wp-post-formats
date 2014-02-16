@@ -5,23 +5,36 @@
 <?php
 
 // running this in the view so it can be used by multiple functions
+$attachments = get_post_galleries( $post->ID, false  );
 
-$attachments = get_posts(array(
-	'post_type' => 'attachment',
-	'numberposts' => -1,
-	'post_status' => null,
-	'post_parent' => $post->ID,
-	'order' => 'ASC',
-	'orderby' => 'menu_order ID',
-));
-if ($attachments) {
-	echo '<ul class="gallery">';
-	foreach ($attachments as $attachment) {
-		echo '<li>'.wp_get_attachment_image($attachment->ID, 'thumbnail').'</li>';
+
+if( !empty( $attachments ) ){
+
+	// iterate through each files
+	foreach( $attachments as $attachment ){
+	
+		if( !empty( $attachment['ids'] ) ){
+		
+			// go get the ids
+			$attachment_ids = $attachment['ids'];
+			
+			// break the ids into array so we can
+			// iterate on each element one by one
+			$attachment_id_collection = explode( ',' , $attachment_ids );
+			
+			$attachment_id_collection_count = count( $attachment_id_collection );
+			
+			// maybe check if its empty?
+			if( 0 == $attachment_id_collection_count || !empty ( $attachment_id_collection ) ){
+				echo '<ul class="gallery">';
+					for( $i = 0; $i < $attachment_id_collection_count; $i ++ ){
+						echo '<li>' . wp_get_attachment_image( $attachment_id_collection[$i] ) . '</li>';
+					}
+				echo '</ul>';	
+			}
+		}
 	}
-	echo '</ul>';
 }
-
 ?>
 <p class="none"><a href="#" class="button"><?php _e('Upload Images', 'cf-post-format'); ?></a></p>
 	</div>
