@@ -107,7 +107,7 @@
 }
 .cf-nav ul {
 	list-style-type: none;
-	margin: 0 10px;
+	margin: 0 8px;
 	padding: 0;
 }
 .cf-nav ul li,
@@ -127,7 +127,6 @@
 	margin-right: 8px;
 	padding: 8px 10px;
 	text-decoration: none;
-	text-shadow: #fff 0 1px 1px;
 }
 .cf-nav ul li a:hover {
 	background-color: #fff;
@@ -151,3 +150,26 @@
 	color: #666;
 }
 
+@media (max-width: 1020px) {
+	.cf-nav ul li a span {
+		display: none;
+		/*color: red;*/
+	}
+	.cf-nav ul li a:before {
+		margin-right: 0;
+	}
+	.cf-nav ul li a.current:before {
+		margin-right: 7px;
+	}
+	.cf-nav ul li a.current span {
+		display: inline;
+	}
+}
+
+@media (max-width: 515px) {
+	.cf-nav ul li a,
+	.cf-nav ul li a.current {
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 7px;
+	}
+}
