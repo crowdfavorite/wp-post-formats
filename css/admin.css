@@ -97,21 +97,18 @@
 	margin-right: 10px;
 }
 
-#cf-post-format-tabs {
-	margin-bottom: 0;
-}
 
 /** tab navigation
  -------------------------------------------------- */
 .cf-nav {
 	border-bottom: 1px solid #ccc;
-	margin: 10px 0 20px 0;
+	margin: 12px 0 11px 0;
 	width: 100%;
 }
 .cf-nav ul {
 	list-style-type: none;
 	margin: 0 10px;
-	padding: 0em;
+	padding: 0;
 }
 .cf-nav ul li,
 .cf-nav ul li a {
@@ -120,32 +117,26 @@
 }
 .cf-nav ul li a {
 	display: block;
-	color: #999;
-	background-color: #eee;
-	border: 1px solid #ddd;
+	color: #555;
+	background-color: #e4e4e4;
+	border: 1px solid #ccc;
 	border-bottom: 0;
-	font-size: 12px;
-	height: 25px;
-	line-height: 25px;
-	margin-right: 5px;
-	padding: 0 10px;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.4;
+	margin-right: 8px;
+	padding: 6px 10px;
 	text-decoration: none;
 	text-shadow: #fff 0 1px 1px;
-	-moz-border-radius-topleft: 3px;
-	-webkit-border-top-left-radius: 3px;
-	border-top-left-radius: 3px;
-	-moz-border-radius-topright: 3px;
-	-webkit-border-top-right-radius: 3px;
-	border-top-right-radius: 3px;
 }
 .cf-nav ul li a:hover {
-	color: #666;
+	background-color: #fff;
+	color: #464646;
 }
 .cf-nav ul li a.current {
 	background: none;
-	border: 1px solid #ccc;
 	border-bottom: 1px solid #f1f1f1;
-	color: #464646;
+	color: #000;
 	margin-bottom: -1px;
 }
 .cf-nav ul li a:focus {
