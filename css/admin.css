@@ -125,7 +125,7 @@
 	font-weight: 700;
 	line-height: 1.4;
 	margin-right: 8px;
-	padding: 6px 10px;
+	padding: 8px 10px;
 	text-decoration: none;
 	text-shadow: #fff 0 1px 1px;
 }
@@ -142,3 +142,12 @@
 .cf-nav ul li a:focus {
 	outline: none;
 }
+.cf-nav ul li a:before {
+	color: #888;
+	vertical-align: top;
+}
+.cf-nav ul li a:hover:before,
+.cf-nav ul li a.current:before {
+	color: #666;
+}
+
