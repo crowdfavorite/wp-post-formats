@@ -5,7 +5,7 @@
 foreach ($post_formats as $format) {
 	$class = 'post-format-icon post-format-'.$format;
 
-	$class .= ($format == $current_post_format || (empty($current_post_format) && $format == 'standard') ? 'current' : '');
+	$class .= ($format == $current_post_format || (empty($current_post_format) && $format == 'standard') ? ' current' : '');
 
 	if ($format == 'standard') {
 		$format_string = __('Standard', 'cf-post-format');
