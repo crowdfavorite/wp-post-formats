@@ -16,7 +16,7 @@ foreach ($post_formats as $format) {
 		$format_hash = 'post-format-'.$format;
 	}
 
-	echo '<li><a '.(!empty($class) ? 'class="'.esc_attr($class).'"' : '').' href="#'.esc_attr($format_hash).'">'.esc_html($format_string).'</a></li>';
+	echo '<li><a '.(!empty($class) ? 'class="'.esc_attr($class).'"' : '').' href="#'.esc_attr($format_hash).'"><span>'.esc_html($format_string).'</span></a></li>';
 }
 
 ?>
