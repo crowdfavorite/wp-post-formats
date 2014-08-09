@@ -6,18 +6,16 @@
 
 // running this in the view so it can be used by multiple functions
 
-$attachments = get_posts(array(
-	'post_type' => 'attachment',
-	'numberposts' => -1,
-	'post_status' => null,
-	'post_parent' => $post->ID,
-	'order' => 'ASC',
-	'orderby' => 'menu_order ID',
-));
-if ($attachments) {
+$galleries = get_post_galleries($post->ID, false);
+$attachments = [];
+foreach($galleries as $gallery) {
+	$attachments=$attachments + explode(',',$gallery['ids']);
+}
+$attachments = array_unique($attachments);
+if (!empty($attachments)) {
 	echo '<ul class="gallery">';
 	foreach ($attachments as $attachment) {
-		echo '<li>'.wp_get_attachment_image($attachment->ID, 'thumbnail').'</li>';
+		echo '<li>'.wp_get_attachment_image($attachment, 'thumbnail').'</li>';
 	}
 	echo '</ul>';
 }
