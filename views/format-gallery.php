@@ -1,6 +1,18 @@
 <div id="cfpf-format-gallery-preview" class="cf-elm-block cf-elm-block-image" style="display: none;">
+
 	<label><span><?php _e('Gallery Images', 'cf-post-format'); ?></span></label>
 	<div class="cf-elm-container">
+		<div class="cf-elm-block">
+			<div class="cf-elem-inline">
+				<input type="radio" name="gallerygroup" value="shortcode" id="shortcode"> Gallery Shortcode
+			</div>
+			<div class="cf-elem-inline">
+				<input type="text" name="_format_gallery_preview_shortcode" value="<?php echo esc_attr(get_post_meta($post->ID, '_format_gallery_preview_shortcode', true)); ?>" id="cfpf-format-gallery-preview-shortcode" tabindex="1" />
+			</div>
+			<div>
+				<input type="radio" name="gallerygroup" value="defaultgallery" checked> All Images
+			</div>
+	</div>
 
 <?php
 
@@ -14,6 +26,7 @@ $attachments = get_posts(array(
 	'order' => 'ASC',
 	'orderby' => 'menu_order ID',
 ));
+
 if ($attachments) {
 	echo '<ul class="gallery">';
 	foreach ($attachments as $attachment) {

@@ -251,4 +251,5 @@ function cfpf_social_broadcast_format($format, $post) {
 }
 add_filter('social_broadcast_format', 'cfpf_social_broadcast_format', 10, 2);
 
+
 } // end defined check
