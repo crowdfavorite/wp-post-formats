@@ -4,7 +4,6 @@
 	<div class="cf-elm-container">
 		<div class="cf-elm-block">
 			<div class="cf-elem-inline">
-				<?php var_dump(get_post_meta($post->ID, '_format_gallery_checked_shortcode', false), 1 ); ?>
 				<input type="radio" name="_format_gallery_checked_shortcode" id="shortcode" value="shortcode" <?php checked( get_post_meta($post->ID, '_format_gallery_checked_shortcode', true), 'shortcode' ); ?>" id="cfpf-format-gallery-checked-shortcode" tabindex="1" /> Gallery Shortcode
 			</div>
 			<div class="cf-elem-inline">

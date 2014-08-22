@@ -238,6 +238,24 @@ function cfpf_post_has_gallery($post_id = null) {
 	return (bool) $images->post_count;
 }
 
+function shortcode_gallery_atts( $atts ) {
+	global $post;
+	$shortcode = get_post_meta($post->ID, '_format_gallery_checked_shortcode', true);
+	$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
+	var_dump($shortcodeatts);
+	if ( $shortcode == 'shortcode' && !empty($shortcodeatts)) {
+		if ( ( 'gallery' ) ) {
+		$atts['columns'] = '4';
+		}
+	}
+
+		
+	return $atts;
+		
+	}
+
+add_filter( 'shortcode_atts_gallery', 'shortcode_gallery_atts', 10, 1 );
+
 function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
 	// return if we don't get a post ID (pre WP 3.4)
 	if (empty($post_id)) {
