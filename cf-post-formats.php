@@ -259,10 +259,11 @@ function cfpf_post_has_gallery($post_id = null) {
 function shortcode_gallery_atts( $atts ) {
 	global $post;
 	$shortcode = get_post_meta($post->ID, '_format_gallery_checked_shortcode', true);
-	//First try used an acuatl short code as input. There could be lots of variations on what a user puts in here in an actual
-	//shorttag. The questio is to you try to fileter all the possible scode params?
+	//Work in progress. First try at using an actual short code as input. There could be lots of variations on what a user puts in here in an actual
+	//shorttag. The question is to you try to filter all the possible scode params?
 	//$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
 	
+	//Using a comma separated list for now of desired image ids.
 	$shortcodeatts = get_post_meta($post->ID, '_format_gallery_preview_shortcode', true);
 
 	//get all the attachments already on the post to filter them out.
