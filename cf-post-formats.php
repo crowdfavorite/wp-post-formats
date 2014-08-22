@@ -194,15 +194,15 @@ function cfpf_format_audio_save_post($post_id) {
 }
 // action added in cfpf_admin_init()
 
-function cfpf_format_gallery_save_post($post_id) {
-	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_preview_shortcode'])) {
-		update_post_meta($post_id, '_format_gallery_preview_shortcode', $_POST['_format_gallery_preview_shortcode']);
+function cfpf_format_gallery_save_post( $post_id ) {
+	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_preview_shortcode'] ) ) {
+		update_post_meta( $post_id, '_format_gallery_preview_shortcode', $_POST['_format_gallery_preview_shortcode']);
 	}
-	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_checked_shortcode'])) {
-		update_post_meta($post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
+	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_shortcode'] ) ) {
+		update_post_meta( $post_id, '_format_gallery_checked_shortcode', sanitize_text_field( $_POST['_format_gallery_checked_shortcode'] ) );
 	}
-	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_checked_allimages'])) {
-		update_post_meta($post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
+	if ( !defined('XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_allimages'] ) ) {
+		update_post_meta( $post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
 	}
 }
 // action added in cfpf_admin_init()
@@ -241,15 +241,32 @@ function cfpf_post_has_gallery($post_id = null) {
 function shortcode_gallery_atts( $atts ) {
 	global $post;
 	$shortcode = get_post_meta($post->ID, '_format_gallery_checked_shortcode', true);
-	$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
-	var_dump($shortcodeatts);
+	//First try used an acuatl short code as input. There could be lots of variations on what a user puts in here in an actual
+	//shorttag. The questio is to you try to fileter all the possible scode params?
+	//$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
+	
+	$shortcodeatts = get_post_meta($post->ID, '_format_gallery_preview_shortcode', true);
+
+	//get all the attachments already on the post to filter them out.
+	$attachments = get_children( array(
+	'post_parent'    => $attr['id'],
+	'post_status'    => 'inherit',
+	'post_type'      => 'attachment',
+	'post_mime_type' => 'image',
+	'order'          => $attr['order'],
+	'orderby'        => $attr['orderby'],
+	) );
+	
+	$excludeids = implode( ",", array_keys($attachments) );
+
 	if ( $shortcode == 'shortcode' && !empty($shortcodeatts)) {
 		if ( ( 'gallery' ) ) {
-		$atts['columns'] = '4';
+			$atts['exclude'] = $excludeids;
+			$atts['include'] = $shortcodeatts;
+			$atts['columns'] = '4';
 		}
 	}
 
-		
 	return $atts;
 		
 	}
