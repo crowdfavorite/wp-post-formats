@@ -56,6 +56,9 @@ function cfpf_admin_init() {
 		if (in_array('audio', $post_formats[0])) {
 			add_action('save_post', 'cfpf_format_audio_save_post');
 		}
+		if (in_array('gallery', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_gallery_save_post');
+		}
 	}
 }
 add_action('admin_init', 'cfpf_admin_init');
@@ -187,6 +190,19 @@ function cfpf_format_video_save_post($post_id) {
 function cfpf_format_audio_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_audio_embed'])) {
 		update_post_meta($post_id, '_format_audio_embed', $_POST['_format_audio_embed']);
+	}
+}
+// action added in cfpf_admin_init()
+
+function cfpf_format_gallery_save_post($post_id) {
+	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_preview_shortcode'])) {
+		update_post_meta($post_id, '_format_gallery_preview_shortcode', $_POST['_format_gallery_preview_shortcode']);
+	}
+	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_checked_shortcode'])) {
+		update_post_meta($post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
+	}
+	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_gallery_checked_allimages'])) {
+		update_post_meta($post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
 	}
 }
 // action added in cfpf_admin_init()
