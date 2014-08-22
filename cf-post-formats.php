@@ -203,14 +203,17 @@ function cfpf_format_audio_save_post($post_id) {
  * @return void
  */
 function cfpf_format_gallery_save_post( $post_id ) {
-	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_preview_shortcode'] ) ) {
-		update_post_meta( $post_id, '_format_gallery_preview_shortcode', $_POST['_format_gallery_preview_shortcode']);
-	}
-	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_shortcode'] ) ) {
-		update_post_meta( $post_id, '_format_gallery_checked_shortcode', sanitize_text_field( $_POST['_format_gallery_checked_shortcode'] ) );
-	}
-	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_allimages'] ) ) {
-		update_post_meta( $post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
+	if (!defined('XMLRPC_REQUEST')) {
+		$keys = array(
+			'_format_gallery_preview_shortcode',
+			'_format_gallery_checked_shortcode',
+			'_format_gallery_checked_allimages'
+		);
+		foreach ($keys as $key) {
+			if (isset($_POST[$key])) {
+				update_post_meta($post_id, $key, $_POST[$key]);
+			}
+		}
 	}
 }
 // action added in cfpf_admin_init()
@@ -261,10 +264,12 @@ function shortcode_gallery_atts( $atts ) {
 	$shortcode = get_post_meta($post->ID, '_format_gallery_checked_shortcode', true);
 	//Work in progress. First try at using an actual short code as input. There could be lots of variations on what a user puts in here in an actual
 	//shorttag. The question is to you try to filter all the possible scode params?
-	//$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
+	$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
+
+	var_dump($shortcodeatts);
 	
 	//Using a comma separated list for now of desired image ids.
-	$shortcodeatts = get_post_meta($post->ID, '_format_gallery_preview_shortcode', true);
+	//$shortcodeatts = get_post_meta($post->ID, '_format_gallery_preview_shortcode', true);
 
 	//get all the attachments already on the post to filter them out.
 	$attachments = get_children( array(
