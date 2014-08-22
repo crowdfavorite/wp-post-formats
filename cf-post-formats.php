@@ -194,6 +194,14 @@ function cfpf_format_audio_save_post($post_id) {
 }
 // action added in cfpf_admin_init()
 
+/**
+ * Updates the _format_gallery values in the DB for
+ * the radio buttons and text field in the gallery format tab.
+ *
+ * 
+ * @param int $post_id The id of the post.
+ * @return void
+ */
 function cfpf_format_gallery_save_post( $post_id ) {
 	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_preview_shortcode'] ) ) {
 		update_post_meta( $post_id, '_format_gallery_preview_shortcode', $_POST['_format_gallery_preview_shortcode']);
@@ -201,7 +209,7 @@ function cfpf_format_gallery_save_post( $post_id ) {
 	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_shortcode'] ) ) {
 		update_post_meta( $post_id, '_format_gallery_checked_shortcode', sanitize_text_field( $_POST['_format_gallery_checked_shortcode'] ) );
 	}
-	if ( !defined('XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_allimages'] ) ) {
+	if ( !defined( 'XMLRPC_REQUEST' ) && isset( $_POST['_format_gallery_checked_allimages'] ) ) {
 		update_post_meta( $post_id, '_format_gallery_checked_shortcode', $_POST['_format_gallery_checked_shortcode']);
 	}
 }
@@ -238,6 +246,16 @@ function cfpf_post_has_gallery($post_id = null) {
 	return (bool) $images->post_count;
 }
 
+/**
+ * Callback from the shortcode_atts_{gallery} filter
+ * which allows us to manipulate the default gallery settings.
+ * In this case we are going to override showing all posts
+ * with the user defined ones instead.
+ *
+ * 
+ * @param array $atts The default gallery array of data i.e. all attachemnts. 
+ * @return array $atts our alternate gallery shortcode.
+ */
 function shortcode_gallery_atts( $atts ) {
 	global $post;
 	$shortcode = get_post_meta($post->ID, '_format_gallery_checked_shortcode', true);
