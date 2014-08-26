@@ -249,54 +249,6 @@ function cfpf_post_has_gallery($post_id = null) {
 	return (bool) $images->post_count;
 }
 
-/**
- * Callback from the shortcode_atts_{gallery} filter
- * which allows us to manipulate the default gallery settings.
- * In this case we are going to override showing all posts
- * with the user defined ones instead.
- *
- * 
- * @param array $atts The default gallery array of data i.e. all attachemnts. 
- * @return array $atts our alternate gallery shortcode.
- */
-function shortcode_gallery_atts( $atts ) {
-	global $post;
-	$shortcode = get_post_meta($post->ID, '_format_gallery_checked_shortcode', true);
-	//Work in progress. First try at using an actual short code as input. There could be lots of variations on what a user puts in here in an actual
-	//shorttag. The question is to you try to filter all the possible scode params?
-	$shortcodeatts = shortcode_parse_atts( get_post_meta($post->ID, '_format_gallery_preview_shortcode', true) );
-
-	var_dump($shortcodeatts);
-	
-	//Using a comma separated list for now of desired image ids.
-	//$shortcodeatts = get_post_meta($post->ID, '_format_gallery_preview_shortcode', true);
-
-	//get all the attachments already on the post to filter them out.
-	$attachments = get_children( array(
-	'post_parent'    => $attr['id'],
-	'post_status'    => 'inherit',
-	'post_type'      => 'attachment',
-	'post_mime_type' => 'image',
-	'order'          => $attr['order'],
-	'orderby'        => $attr['orderby'],
-	) );
-	
-	$excludeids = implode( ",", array_keys($attachments) );
-
-	if ( $shortcode == 'shortcode' && !empty($shortcodeatts)) {
-		if ( ( 'gallery' ) ) {
-			$atts['exclude'] = $excludeids;
-			$atts['include'] = $shortcodeatts;
-			$atts['columns'] = '4';
-		}
-	}
-
-	return $atts;
-		
-	}
-
-add_filter( 'shortcode_atts_gallery', 'shortcode_gallery_atts', 10, 1 );
-
 function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
 	// return if we don't get a post ID (pre WP 3.4)
 	if (empty($post_id)) {
