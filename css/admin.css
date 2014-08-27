@@ -77,10 +77,6 @@
 	background: #fff;
 }
 
-.cf-elem-inline {
-	display:inline-block;
-}
-
 /* Video Field */
 #cfpf-format-video-embed {
 	height: 65px;
