@@ -5,7 +5,7 @@
 	<div class="cf-elm-container">
 		<p>
 			<input type="radio" name="_format_gallery_type" id="shortcode" value="shortcode" <?php checked( get_post_meta($post->ID, '_format_gallery_type', true), 'shortcode' ); ?>" id="cfpf-format-gallery-checked-shortcode"  /> Shortcode
-			<span style="display:inline-block;"><input type="text" name="_format_gallery_preview_shortcode" value="<?php echo esc_attr(get_post_meta($post->ID, '_format_gallery_preview_shortcode', true)); ?>" id="cfpf-format-gallery-preview-shortcode" tabindex="1" /></span>
+			<span style="display:inline-block;"><input type="text" name="_format_gallery_preview_shortcode" value="<?php echo esc_attr(get_post_meta($post->ID, '_format_gallery_preview_shortcode', true)); ?>" id="cfpf-format-gallery-preview-shortcode" /></span>
 		</p>
 		<p>
 			<input type="radio" name="_format_gallery_type" value="attached-images" id="attached-images" <?php checked( get_post_meta($post->ID, '_format_gallery_type', true), 'attached-images' ); ?>" id="cfpf-format-gallery-checked-allimages"  /> All Images
