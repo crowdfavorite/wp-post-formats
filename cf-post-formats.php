@@ -206,8 +206,7 @@ function cfpf_format_gallery_save_post( $post_id ) {
 	if (!defined('XMLRPC_REQUEST')) {
 		$keys = array(
 			'_format_gallery_preview_shortcode',
-			'_format_gallery_checked_shortcode',
-			'_format_gallery_checked_allimages'
+			'_format_gallery_type'
 		);
 		foreach ($keys as $key) {
 			if (isset($_POST[$key])) {
