@@ -96,7 +96,7 @@ jQuery(function($) {
 	$(document).trigger('cf-post-formats-init');
 	
 	// tab switch
-	$('#cf-post-format-tabs a').live('click', function(e) {
+	$(document).on('click', '#cf-post-format-tabs a', function(e) {
 		CF.postFormats.switchTab(this);
 		e.stopPropagation();
 		e.preventDefault();
@@ -147,7 +147,7 @@ jQuery(function($) {
 	}, gallery );
 
 	
-	$('#cfpf-format-gallery-preview .none a').live('click', function(e) {
+	$(document).on('click', '#cfpf-format-gallery-preview .none a', function(e) {
 		$('#wp-content-media-buttons .insert-media').mousedown().mouseup().click();
 		e.preventDefault();
 	});

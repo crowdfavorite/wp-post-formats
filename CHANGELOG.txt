@@ -4,6 +4,7 @@
 
 - (fix) Gallery preview images are served over SSL if the admin page is loaded over SSL
 - (fix) Suppress PHP warning that could display in some situations when loading gallery preview images
+- (fix) jQuery live() is deprecated
 
 ## Version 1.3.1
 
