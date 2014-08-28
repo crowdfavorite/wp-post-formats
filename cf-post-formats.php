@@ -195,6 +195,12 @@ function cfpf_gallery_preview() {
 	if (empty($_POST['id']) || !($post_id = intval($_POST['id']))) {
 		exit;
 	}
+
+	// SSL check
+	if (is_ssl()) {
+		add_filter('wp_get_attachment_image_attributes', 'cfpf_ssl_gallery_preview', 10, 2);
+	}
+
 	global $post;
 	$post->ID = $post_id;
 	ob_start();
@@ -205,6 +211,11 @@ function cfpf_gallery_preview() {
 	exit;
 }
 add_action('wp_ajax_cfpf_gallery_preview', 'cfpf_gallery_preview');
+
+function cfpf_ssl_gallery_preview($attr, $attachment) {
+	$attr['src'] = str_replace('http://', 'https://', $attr['src']);
+	return $attr;
+}
 
 function cfpf_post_has_gallery($post_id = null) {
 	if (empty($post_id)) {
