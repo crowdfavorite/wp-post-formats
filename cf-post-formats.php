@@ -196,11 +196,6 @@ function cfpf_gallery_preview() {
 		exit;
 	}
 
-	// SSL check
-	if (is_ssl()) {
-		add_filter('wp_get_attachment_image_attributes', 'cfpf_ssl_gallery_preview', 10, 2);
-	}
-
 	global $post;
 	$post->ID = $post_id;
 	ob_start();
@@ -212,6 +207,7 @@ function cfpf_gallery_preview() {
 }
 add_action('wp_ajax_cfpf_gallery_preview', 'cfpf_gallery_preview');
 
+// filter added conditionally in views/format-gallery.php
 function cfpf_ssl_gallery_preview($attr, $attachment) {
 	$attr['src'] = str_replace('http://', 'https://', $attr['src']);
 	return $attr;
