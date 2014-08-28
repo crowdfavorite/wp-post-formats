@@ -15,6 +15,11 @@ $attachments = get_posts(array(
 	'orderby' => 'menu_order ID',
 ));
 if ($attachments) {
+
+	if (is_ssl()) {
+		add_filter('wp_get_attachment_image_attributes', 'cfpf_ssl_gallery_preview', 10, 2);
+	}
+
 	echo '<ul class="gallery">';
 	foreach ($attachments as $attachment) {
 		echo '<li>'.wp_get_attachment_image($attachment->ID, 'thumbnail').'</li>';
