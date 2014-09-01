@@ -198,14 +198,14 @@ function cfpf_format_audio_save_post($post_id) {
  * Updates the _format_gallery values in the DB for
  * the radio buttons and text field in the gallery format tab.
  *
- * 
+ *
  * @param int $post_id The id of the post.
  * @return void
  */
 function cfpf_format_gallery_save_post( $post_id ) {
 	if (!defined('XMLRPC_REQUEST')) {
 		$keys = array(
-			'_format_gallery_preview_shortcode',
+			'_format_gallery_shortcode',
 			'_format_gallery_type'
 		);
 		foreach ($keys as $key) {
@@ -253,6 +253,47 @@ function cfpf_post_has_gallery($post_id = null) {
 		'order' => 'ASC'
 	));
 	return (bool) $images->post_count;
+}
+
+// ensure that we have expected data and set a default
+// for backward compatibility.
+function cfpf_post_gallery_type() {
+	$post = get_post();
+	$value = get_post_meta($post->ID, '_format_gallery_type', true);
+	switch ($value) {
+		case 'shortcode':
+		case 'attached-images':
+			$value = $value;
+		break;
+		default:
+			$value = 'attached-images';
+	}
+	return $value;
+}
+
+// accepts an associative array of args to added to the shortcode before output
+function cfpf_gallery_output($args = array()) {
+	// setup args if we have any
+	$args_string = '';
+	if (!empty($args)) {
+		foreach ($args as $k => $v) {
+			$args_string .= $k.'="'.esc_attr($v).'" ';
+		}
+	}
+	$type = cfpf_post_gallery_type();
+	// if type is set to shortcode, make sure we have something as a shortcode
+	if ($type == 'shortcode') {
+		$post = get_post();
+		$shortcode = trim(get_post_meta($post->ID, '_format_gallery_shortcode', true));
+		if (!empty($shortcode) && substr($shortcode, -1) == ']') {
+			// add args
+			$shortcode = substr($shortcode, 0, -1).' '.$args_string.']';
+			echo do_shortcode($shortcode);
+			return;
+		}
+	}
+	// or fall back to attached images
+	echo do_shortcode('[gallery '.$args_string.']');
 }
 
 function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {

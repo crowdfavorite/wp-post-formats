@@ -1,14 +1,21 @@
+<?php
+
+$gallery_type = cfpf_post_gallery_type();
+
+?>
 <div id="cfpf-format-gallery-preview" class="cf-elm-block cf-elm-block-image" style="display: none;">
 
 	<label><span><?php _e('Gallery Images', 'cf-post-format'); ?></span></label>
-	
-	<div class="cf-elm-container">
+
+	<div class="cf-elm-container cfpf-gallery-options">
 		<p>
-			<input type="radio" name="_format_gallery_type" id="shortcode" value="shortcode" <?php checked( get_post_meta($post->ID, '_format_gallery_type', true), 'shortcode' ); ?>" id="cfpf-format-gallery-checked-shortcode"  /> Shortcode
-			<span style="display:inline-block;"><input type="text" name="_format_gallery_preview_shortcode" value="<?php echo esc_attr(get_post_meta($post->ID, '_format_gallery_preview_shortcode', true)); ?>" id="cfpf-format-gallery-preview-shortcode" /></span>
+			<input type="radio" name="_format_gallery_type" value="shortcode" <?php checked($gallery_type, 'shortcode' ); ?> id="cfpf-format-gallery-type-shortcode"  />
+			<label for="cfpf-format-gallery-type-shortcode"><?php _e('Shortcode', 'cf-post-format'); ?></label>
+			<input type="text" name="_format_gallery_shortcode" value="<?php echo esc_attr(get_post_meta($post->ID, '_format_gallery_shortcode', true)); ?>" id="cfpf-format-gallery-shortcode" />
 		</p>
 		<p>
-			<input type="radio" name="_format_gallery_type" value="attached-images" id="attached-images" <?php checked( get_post_meta($post->ID, '_format_gallery_type', true), 'attached-images' ); ?>" id="cfpf-format-gallery-checked-allimages"  /> All Images
+			<input type="radio" name="_format_gallery_type" value="attached-images" <?php checked($gallery_type, 'attached-images' ); ?> id="cfpf-format-gallery-type-attached" />
+			<label for="cfpf-format-gallery-type-attached"><?php _e('Images uploaded to this post', 'cf-post-format'); ?></label>
 		</p>
 
 
