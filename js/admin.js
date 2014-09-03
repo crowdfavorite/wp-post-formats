@@ -103,6 +103,11 @@ jQuery(function($) {
 	}).filter('.current').each(function() {
 		CF.postFormats.switchWPFormat($(this).attr('href'));
 	});
+	
+	// set to shortcode when clicking into shortcode field
+	$(document).on('click focus', '#cfpf-format-gallery-shortcode', function() {
+		$('#cfpf-format-gallery-type-shortcode').prop('checked', true);
+	});
 
 	// WordPress 3.5 compatibility
 	// props: https://gist.github.com/4192094

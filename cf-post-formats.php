@@ -56,6 +56,9 @@ function cfpf_admin_init() {
 		if (in_array('audio', $post_formats[0])) {
 			add_action('save_post', 'cfpf_format_audio_save_post');
 		}
+		if (in_array('gallery', $post_formats[0])) {
+			add_action('save_post', 'cfpf_format_gallery_save_post');
+		}
 	}
 }
 add_action('admin_init', 'cfpf_admin_init');
@@ -191,6 +194,29 @@ function cfpf_format_audio_save_post($post_id) {
 }
 // action added in cfpf_admin_init()
 
+/**
+ * Updates the _format_gallery values in the DB for
+ * the radio buttons and text field in the gallery format tab.
+ *
+ *
+ * @param int $post_id The id of the post.
+ * @return void
+ */
+function cfpf_format_gallery_save_post( $post_id ) {
+	if (!defined('XMLRPC_REQUEST')) {
+		$keys = array(
+			'_format_gallery_shortcode',
+			'_format_gallery_type'
+		);
+		foreach ($keys as $key) {
+			if (isset($_POST[$key])) {
+				update_post_meta($post_id, $key, $_POST[$key]);
+			}
+		}
+	}
+}
+// action added in cfpf_admin_init()
+
 function cfpf_gallery_preview() {
 	if (empty($_POST['id']) || !($post_id = intval($_POST['id']))) {
 		exit;
@@ -229,6 +255,47 @@ function cfpf_post_has_gallery($post_id = null) {
 	return (bool) $images->post_count;
 }
 
+// ensure that we have expected data and set a default
+// for backward compatibility.
+function cfpf_post_gallery_type() {
+	$post = get_post();
+	$value = get_post_meta($post->ID, '_format_gallery_type', true);
+	switch ($value) {
+		case 'shortcode':
+		case 'attached-images':
+			$value = $value;
+		break;
+		default:
+			$value = 'attached-images';
+	}
+	return $value;
+}
+
+// accepts an associative array of args to added to the shortcode before output
+function cfpf_gallery_output($args = array()) {
+	// setup args if we have any
+	$args_string = '';
+	if (!empty($args)) {
+		foreach ($args as $k => $v) {
+			$args_string .= $k.'="'.esc_attr($v).'" ';
+		}
+	}
+	$type = cfpf_post_gallery_type();
+	// if type is set to shortcode, make sure we have something as a shortcode
+	if ($type == 'shortcode') {
+		$post = get_post();
+		$shortcode = trim(get_post_meta($post->ID, '_format_gallery_shortcode', true));
+		if (!empty($shortcode) && substr($shortcode, -1) == ']') {
+			// add args
+			$shortcode = substr($shortcode, 0, -1).' '.$args_string.']';
+			echo do_shortcode($shortcode);
+			return;
+		}
+	}
+	// or fall back to attached images
+	echo do_shortcode('[gallery '.$args_string.']');
+}
+
 function cfpf_pre_ping_post_links($post_links, $pung, $post_id = null) {
 	// return if we don't get a post ID (pre WP 3.4)
 	if (empty($post_id)) {
@@ -257,5 +324,6 @@ function cfpf_social_broadcast_format($format, $post) {
 	return $format;
 }
 add_filter('social_broadcast_format', 'cfpf_social_broadcast_format', 10, 2);
+
 
 } // end defined check

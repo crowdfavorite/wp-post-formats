@@ -56,6 +56,19 @@
 .cf-elm-block .cf-elm-container p.none {
 	text-align: center;
 }
+.cf-elm-block .cfpf-gallery-options {
+	padding-top: 0;
+}
+.cf-elm-block .cfpf-gallery-options label {
+	display: inline;
+	padding-left: 2px;
+	text-transform: capitalize;
+}
+#cfpf-format-gallery-shortcode {
+	margin-left: 8px;
+	min-width: 350px;
+	width: 70%;
+}
 .cf-elm-block .cf-elm-image-gallery {
 	margin: 0 0 -5px 0;
 	padding: 0;
@@ -72,7 +85,6 @@
 .cf-elm-block .cf-elm-container .gallery li img {
 	vertical-align: middle;
 }
-
 #cfpf-format-gallery-preview .cf-elm-container {
 	background: #fff;
 }
