@@ -3,6 +3,8 @@
 Plugin Name: CF Post Formats
 Plugin URI: http://crowdfavorite.com
 Description: Custom post format admin UI
+Text Domain: cf-post-format
+Domain Path: /languages/
 Version: 1.3.1
 Author: crowdfavorite
 Author URI: http://crowdfavorite.com
@@ -37,6 +39,15 @@ define('CFPF_VERSION', '1.3');
 function cfpf_base_url() {
 	return trailingslashit(apply_filters('cfpf_base_url', plugins_url('', __FILE__)));
 }
+
+/**
+ * Load translation files
+ */
+function cf_post_format_translation_files() {
+  $theload = load_plugin_textdomain( 'cf-post-format', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+ }
+ 
+add_action( 'init', 'cf_post_format_translation_files' );
 
 function cfpf_admin_init() {
 	$post_formats = get_theme_support('post-formats');
