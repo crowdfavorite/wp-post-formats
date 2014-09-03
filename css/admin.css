@@ -78,7 +78,9 @@
 	padding-bottom: 8px;
 }
 .cf-elm-block .cf-elm-container .gallery li {
-	display: inline-block;
+	cursor: move;
+	display: block;
+	float: left;
 	margin: 0 8px 8px 0;
 	padding: 0;
 }
