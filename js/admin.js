@@ -80,8 +80,31 @@ jQuery(function($) {
 				$('#cfpf-format-link-url, #cfpf-format-quote-fields, #cfpf-format-video-fields, #cfpf-format-gallery-preview').hide();
 				$('#titlewrap, #cfpf-format-audio-fields').show();
 				$('#postimagediv-placeholder').replaceWith($('#postimagediv'));
-			}
+			},
 
+			gallerySortable: function() {
+				$galleryPreview = $('#cfpf-format-gallery-preview .gallery');
+				$galleryPreview.sortable({
+					containment: 'parent',
+					cursor: 'move',
+					forceHelperSize: true,
+					forcePlaceholderSize: true,
+					update: function() {
+						var ids = [];
+						$galleryPreview.find('img.attachment-thumbnail').each(function() {
+							ids.push($(this).data('id'));
+						});
+
+						$.post(
+							ajaxurl,
+							{
+								'action': 'cfpf_gallery_menu_order',
+								'order': ids
+							}
+						);
+					}
+				});
+			}
 		};
 	}(jQuery);
 	
@@ -145,16 +168,18 @@ jQuery(function($) {
 				if ($('#cf-post-format-tabs a.current').attr('href').indexOf('#post-format-gallery') != -1) {
 					$preview.show();
 				}
+
+				CF.postFormats.gallerySortable();
 			},
 			'json'
 		);
 
 	}, gallery );
 
-	
 	$(document).on('click', '#cfpf-format-gallery-preview .none a', function(e) {
 		$('#wp-content-media-buttons .insert-media').mousedown().mouseup().click();
 		e.preventDefault();
 	});
 
+	CF.postFormats.gallerySortable();
 });

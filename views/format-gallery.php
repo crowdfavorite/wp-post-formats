@@ -38,7 +38,7 @@ if ($attachments) {
 		add_filter('wp_get_attachment_image_attributes', 'cfpf_ssl_gallery_preview', 10, 2);
 	}
 
-	echo '<ul class="gallery">';
+	echo '<ul class="gallery clearfix">';
 	foreach ($attachments as $attachment) {
 		echo '<li>'.wp_get_attachment_image($attachment->ID, 'thumbnail').'</li>';
 	}
@@ -46,6 +46,8 @@ if ($attachments) {
 }
 
 ?>
-<p class="none"><a href="#" class="button"><?php _e('Upload Images', 'cf-post-format'); ?></a></p>
+		<p class="none" style="float: none; clear: both;">
+			<a href="#" class="button"><?php _e('Upload Images', 'cf-post-format'); ?></a>
+		</p>
 	</div>
 </div>
