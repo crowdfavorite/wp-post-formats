@@ -275,18 +275,61 @@ function cfpf_ssl_gallery_preview($attr, $attachment) {
 
 function cfpf_post_has_gallery($post_id = null) {
 	if (empty($post_id)) {
-		$post_id = get_the_ID();
+		$post = get_post();
+		$post_id = $post->ID;
 	}
-	$images = new WP_Query(array(
-		'post_parent' => $post_id,
-		'post_type' => 'attachment',
-		'post_status' => 'inherit',
-		'posts_per_page' => 1, // -1 to show all
-		'post_mime_type' => 'image%',
-		'orderby' => 'menu_order',
-		'order' => 'ASC'
-	));
-	return (bool) $images->post_count;
+	if (cfpf_post_gallery_type() == 'shortcode') {
+		$shortcode = get_post_meta($post_id, '_format_gallery_shortcode', true);
+		return (bool) !empty($shortcode);
+	}
+	else {
+		$images = new WP_Query(array(
+			'post_parent' => $post_id,
+			'post_type' => 'attachment',
+			'post_status' => 'inherit',
+			'posts_per_page' => 1, // -1 to show all
+			'post_mime_type' => 'image%',
+			'orderby' => 'menu_order',
+			'order' => 'ASC'
+		));
+		return (bool) $images->post_count;
+	}
+}
+
+// returns the ids parameter from a gallery shortcode,
+// if no param, it finds all attachments (like WP core)
+// returns a comma separated list
+function cfpf_post_gallery_shortcode_ids($post_id = null) {
+	if (empty($post_id)) {
+		$post = get_post();
+		$post_id = $post->ID;
+	}
+	$shortcode = get_post_meta($post_id, '_format_gallery_shortcode', true);
+
+	// parse shortcode to get 'ids' param
+	$pattern = get_shortcode_regex();
+	preg_match("/$pattern/s", $shortcode, $match);
+	$atts = shortcode_parse_atts($match[3]);
+
+	if (isset($atts['ids'])) {
+		return $atts['ids'];
+	}
+	else {
+		$images = new WP_Query(array(
+			'post_parent' => $post_id,
+			'post_type' => 'attachment',
+			'post_status' => 'inherit',
+			'posts_per_page' => -1, // -1 to show all
+			'post_mime_type' => 'image%',
+			'orderby' => 'menu_order',
+			'order' => 'ASC'
+		));
+		$ids = array();
+		foreach ($images as $image) {
+			$ids[] = $image->ID;
+		}
+		return implode($ids, ',');
+	}
 }
 
 // ensure that we have expected data and set a default
