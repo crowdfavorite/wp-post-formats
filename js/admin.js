@@ -123,8 +123,11 @@ jQuery(function($) {
 		CF.postFormats.switchTab(this);
 		e.stopPropagation();
 		e.preventDefault();
-	}).filter('.current').each(function() {
-		CF.postFormats.switchWPFormat($(this).attr('href'));
+	});
+
+	// init on load
+	$( '#cf-post-format-tabs a.current' ).each( function() {
+		CF.postFormats.switchWPFormat( $( this ).attr( 'href' ) );
 	});
 	
 	// set to shortcode when clicking into shortcode field
