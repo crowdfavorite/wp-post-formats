@@ -119,13 +119,12 @@ jQuery(function($) {
 	$(document).trigger('cf-post-formats-init');
 	
 	// tab switch
-	CF.postFormatTabs = $('#cf-post-format-tabs a');
-	$(document).on('click', CF.postFormatTabs, function(e) {
+	$(document).on('click', '#cf-post-format-tabs a', function(e) {
 		CF.postFormats.switchTab(this);
 		e.stopPropagation();
 		e.preventDefault();
 	});
-	CF.postFormatTabs.filter('.current').each(function() {
+	$('#cf-post-format-tabs a').filter('.current').each(function() {
 		CF.postFormats.switchWPFormat($(this).attr('href'));
 	});
 	
