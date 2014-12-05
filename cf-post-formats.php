@@ -175,7 +175,7 @@ function cfpf_format_quote_save_post($post_id, $post) {
 		);
 		foreach ($keys as $key) {
 			if (isset($_POST[$key])) {
-				if ( '_format_quote_source_name' === $_POST[ $key ] ) {
+				if ( '_format_quote_source_name' === $key ) {
 					update_post_meta($post_id, $key, sanitize_text_field( $_POST[$key] ));
 				} else if ( '_format_quote_source_url' ) {
 					update_post_meta($post_id, $key, esc_url_raw( $_POST[$key] ) );
