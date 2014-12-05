@@ -131,7 +131,7 @@ function cfpf_post_admin_setup() {
 
 function cfpf_format_link_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_link_url'])) {
-		update_post_meta($post_id, '_format_link_url', $_POST['_format_link_url']);
+		update_post_meta($post_id, '_format_link_url', esc_url_raw( $_POST['_format_link_url'] ) );
 	}
 }
 // action added in cfpf_admin_init()
@@ -152,8 +152,8 @@ function cfpf_format_auto_title_post($post_id, $post) {
 	}
 	$title = apply_filters('cfpf_format_auto_title', $title, $post);
 	wp_update_post(array(
-		'ID' => $post_id,
-		'post_title' => $title
+		'ID' => intval( $post_id ),
+		'post_title' => sanitize_title( $title ),
 	));
 
 	add_action('save_post', 'cfpf_format_status_save_post', 10, 2);
@@ -175,7 +175,11 @@ function cfpf_format_quote_save_post($post_id, $post) {
 		);
 		foreach ($keys as $key) {
 			if (isset($_POST[$key])) {
-				update_post_meta($post_id, $key, $_POST[$key]);
+				if ( '_format_quote_source_name' === $key ) {
+					update_post_meta($post_id, $key, sanitize_text_field( $_POST[$key] ));
+				} else if ( '_format_quote_source_url' === $key ) {
+					update_post_meta($post_id, $key, esc_url_raw( $_POST[$key] ) );
+				}
 			}
 		}
 	}
@@ -187,14 +191,14 @@ function cfpf_format_quote_save_post($post_id, $post) {
 
 function cfpf_format_video_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_video_embed'])) {
-		update_post_meta($post_id, '_format_video_embed', $_POST['_format_video_embed']);
+		update_post_meta($post_id, '_format_video_embed', wp_kses_post( $_POST['_format_video_embed'] ) );
 	}
 }
 // action added in cfpf_admin_init()
 
 function cfpf_format_audio_save_post($post_id) {
 	if (!defined('XMLRPC_REQUEST') && isset($_POST['_format_audio_embed'])) {
-		update_post_meta($post_id, '_format_audio_embed', $_POST['_format_audio_embed']);
+		update_post_meta($post_id, '_format_audio_embed', wp_kses_post( $_POST['_format_audio_embed'] ) );
 	}
 }
 // action added in cfpf_admin_init()
@@ -215,7 +219,7 @@ function cfpf_format_gallery_save_post( $post_id ) {
 		);
 		foreach ($keys as $key) {
 			if (isset($_POST[$key])) {
-				update_post_meta($post_id, $key, $_POST[$key]);
+				update_post_meta($post_id, $key, sanitize_text_field( $_POST[$key] ) );
 			}
 		}
 	}
@@ -245,8 +249,8 @@ function cfpf_gallery_menu_order() {
 			$post_id = intval($post_id);
 			if ($post_id) {
 				wp_update_post(array(
-					'ID' => $post_id,
-					'menu_order' => $i
+					'ID' => intval( $post_id ),
+					'menu_order' => intval( $i ),
 				));
 				++$i;
 			}
